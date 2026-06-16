@@ -6,7 +6,7 @@ export default function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const [form, setForm] = useState({ email: '', password: '' });
+  const [form, setForm] = useState({ email: 'admin@ims.com', password: 'admin123' });
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
@@ -37,6 +37,16 @@ export default function Login() {
           <div className="mb-6">
             <h2 className="text-headline-md font-semibold text-on-surface">Welcome back</h2>
             <p className="text-body-md text-on-surface-variant mt-1">Please enter your details to sign in.</p>
+          </div>
+
+          {/* Demo Credentials */}
+          <div className="mb-5 bg-primary/5 border border-primary/20 rounded-lg p-3 flex items-start gap-2.5">
+            <span className="material-symbols-outlined text-primary text-[18px] mt-0.5 flex-shrink-0">info</span>
+            <div className="text-body-md text-on-surface-variant">
+              <span className="font-semibold text-on-surface">Demo credentials:</span><br />
+              Email: <code className="bg-white px-1 py-0.5 rounded text-primary text-xs font-mono border border-primary/10">admin@ims.com</code><br />
+              Password: <code className="bg-white px-1 py-0.5 rounded text-primary text-xs font-mono border border-primary/10">admin123</code>
+            </div>
           </div>
 
           <form className="space-y-4" onSubmit={handleSubmit}>

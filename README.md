@@ -11,6 +11,8 @@ A production-ready, full-stack Inventory & Order Management System for managing 
 | **API Docs** | [https://ims-backend-xiyx.onrender.com/docs](https://ims-backend-xiyx.onrender.com/docs) |
 | **Docker Hub** | [adityaagarwal2026/ims-backend](https://hub.docker.com/r/adityaagarwal2026/ims-backend) |
 
+**Demo Login:** Email: `admin@ims.com` · Password: `admin123`
+
 ## Tech Stack
 
 | Layer | Technology |
