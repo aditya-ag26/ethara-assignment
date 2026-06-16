@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
@@ -13,6 +15,7 @@ export default function Login() {
     // Simulate login — no auth backend required for this assignment
     setTimeout(() => {
       setLoading(false);
+      login();
       navigate('/');
     }, 600);
   };
