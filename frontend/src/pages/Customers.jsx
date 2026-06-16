@@ -190,7 +190,7 @@ export default function Customers() {
           </div>
           <div className="space-y-1.5">
             <label className="text-label-md text-on-surface-variant block">Phone Number</label>
-            <input type="tel" className="w-full h-[44px] px-3 border border-[#E2E8F0] rounded-lg text-body-md focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary bg-white" placeholder="+1 (555) 000-0000" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
+            <input type="tel" className="w-full h-[44px] px-3 border border-[#E2E8F0] rounded-lg text-body-md focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary bg-white" placeholder="+91 98765 43210" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
           </div>
         </div>
       </Modal>

@@ -13,14 +13,14 @@ async def lifespan(app: FastAPI):
     for attempt in range(max_retries):
         try:
             Base.metadata.create_all(bind=engine)
-            print("✅ Database tables created successfully")
+            print("[OK] Database tables created successfully")
             break
         except Exception as e:
             if attempt < max_retries - 1:
-                print(f"⏳ Waiting for database... (attempt {attempt + 1}/{max_retries})")
+                print(f"[WAIT] Waiting for database... (attempt {attempt + 1}/{max_retries})")
                 time.sleep(2)
             else:
-                print(f"❌ Could not connect to database: {e}")
+                print(f"[ERROR] Could not connect to database: {e}")
                 raise
     yield
 

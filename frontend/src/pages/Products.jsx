@@ -4,6 +4,7 @@ import Modal from '../components/UI/Modal';
 import ConfirmDialog from '../components/UI/ConfirmDialog';
 import Pagination from '../components/UI/Pagination';
 import { useToast } from '../context/ToastContext';
+import { formatCurrency } from '../utils/format';
 
 const ITEMS_PER_PAGE = 5;
 const emptyForm = { name: '', sku: '', price: '', quantity_in_stock: '' };
@@ -140,7 +141,7 @@ export default function Products() {
                       <td className="px-6 py-4 text-on-surface-variant">{(page - 1) * ITEMS_PER_PAGE + i + 1}</td>
                       <td className="px-6 py-4 font-medium text-on-surface">{p.name}</td>
                       <td className="px-6 py-4 text-on-surface-variant">{p.sku}</td>
-                      <td className="px-6 py-4 text-on-surface text-right font-medium">${Number(p.price).toFixed(2)}</td>
+                      <td className="px-6 py-4 text-on-surface text-right font-medium">{formatCurrency(p.price)}</td>
                       <td className="px-6 py-4 text-on-surface text-center font-medium">{p.quantity_in_stock}</td>
                       <td className="px-6 py-4">
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${badge.cls}`}>{badge.label}</span>
@@ -188,7 +189,7 @@ export default function Products() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-label-md text-on-surface-variant block">Price</label>
+              <label className="text-label-md text-on-surface-variant block">Price (&#8377;)</label>
               <input type="number" step="0.01" min="0" className="w-full h-[44px] px-3 border border-[#E2E8F0] rounded-lg text-body-md focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary bg-white" placeholder="0.00" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} />
             </div>
             <div className="space-y-1.5">

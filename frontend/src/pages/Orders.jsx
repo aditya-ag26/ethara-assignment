@@ -6,6 +6,7 @@ import Modal from '../components/UI/Modal';
 import ConfirmDialog from '../components/UI/ConfirmDialog';
 import Pagination from '../components/UI/Pagination';
 import { useToast } from '../context/ToastContext';
+import { formatCurrency, formatDate } from '../utils/format';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -189,11 +190,11 @@ export default function Orders() {
                       <td className="px-6 py-4 text-on-surface-variant">{(page - 1) * ITEMS_PER_PAGE + i + 1}</td>
                       <td className="px-6 py-4 font-medium text-on-surface">ORD-{String(o.id).padStart(5, '0')}</td>
                       <td className="px-6 py-4 text-on-surface">{o.customer_name || 'N/A'}</td>
-                      <td className="px-6 py-4 text-on-surface text-right font-medium">${Number(o.total_amount || 0).toFixed(2)}</td>
+                      <td className="px-6 py-4 text-on-surface text-right font-medium">{formatCurrency(o.total_amount)}</td>
                       <td className="px-6 py-4">
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${badge.cls}`}>{badge.label}</span>
                       </td>
-                      <td className="px-6 py-4 text-on-surface-variant">{o.created_at ? new Date(o.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '—'}</td>
+                      <td className="px-6 py-4 text-on-surface-variant">{formatDate(o.created_at)}</td>
                       <td className="px-6 py-4 text-center">
                         <div className="flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                           <button onClick={() => openDetails(o)} className="text-on-surface-variant hover:text-primary transition-colors p-1" title="View Details">
@@ -242,7 +243,7 @@ export default function Orders() {
             <div className="relative">
               <select className="w-full h-[44px] pl-3 pr-10 border border-[#E2E8F0] rounded-lg text-body-md appearance-none focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary bg-white" value={currentItem.product_id} onChange={(e) => setCurrentItem({ ...currentItem, product_id: e.target.value })}>
                 <option disabled value="">Select product</option>
-                {products.map((p) => <option key={p.id} value={p.id}>{p.name} — ${Number(p.price).toFixed(2)}</option>)}
+                {products.map((p) => <option key={p.id} value={p.id}>{p.name} — {formatCurrency(p.price)}</option>)}
               </select>
               <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
             </div>
@@ -272,7 +273,7 @@ export default function Orders() {
                     <tr key={idx}>
                       <td className="px-4 py-2 text-on-surface">{item.product_name}</td>
                       <td className="px-4 py-2 text-center">{item.quantity}</td>
-                      <td className="px-4 py-2 text-right font-medium">${(item.price * item.quantity).toFixed(2)}</td>
+                      <td className="px-4 py-2 text-right font-medium">{formatCurrency(item.price * item.quantity)}</td>
                       <td className="px-4 py-2">
                         <button onClick={() => removeItem(idx)} className="text-on-surface-variant hover:text-error transition-colors">
                           <span className="material-symbols-outlined text-[16px]">close</span>
@@ -284,7 +285,7 @@ export default function Orders() {
                 <tfoot className="bg-slate-50 border-t border-[#E2E8F0]">
                   <tr>
                     <td colSpan="2" className="px-4 py-2 text-right font-medium text-on-surface-variant">Total:</td>
-                    <td className="px-4 py-2 text-right font-semibold text-primary">${orderTotal.toFixed(2)}</td>
+                    <td className="px-4 py-2 text-right font-semibold text-primary">{formatCurrency(orderTotal)}</td>
                     <td></td>
                   </tr>
                 </tfoot>
@@ -312,14 +313,14 @@ export default function Orders() {
               <div className="bg-slate-50 p-4 rounded-lg border border-[#E2E8F0] space-y-3 text-body-md">
                 <div className="flex justify-between"><span className="text-on-surface-variant">Order ID</span><span className="font-medium">ORD-{String(detailData.id).padStart(5, '0')}</span></div>
                 <div className="flex justify-between"><span className="text-on-surface-variant">Customer</span><span className="font-medium">{detailData.customer_name || 'N/A'}</span></div>
-                <div className="flex justify-between"><span className="text-on-surface-variant">Date</span><span>{detailData.created_at ? new Date(detailData.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '—'}</span></div>
+                <div className="flex justify-between"><span className="text-on-surface-variant">Date</span><span>{formatDate(detailData.created_at)}</span></div>
                 <div className="flex justify-between items-center">
                   <span className="text-on-surface-variant">Status</span>
                   {(() => { const b = getStatusBadge(detailData.status); return <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider ${b.cls}`}>{b.label}</span>; })()}
                 </div>
                 <div className="pt-3 mt-3 border-t border-[#E2E8F0] flex justify-between items-center">
                   <span className="font-medium text-on-surface">Total</span>
-                  <span className="font-semibold text-lg text-primary">${Number(detailData.total_amount || 0).toFixed(2)}</span>
+                  <span className="font-semibold text-lg text-primary">{formatCurrency(detailData.total_amount)}</span>
                 </div>
               </div>
             </div>
@@ -342,16 +343,16 @@ export default function Orders() {
                     ) : (detailData.items || []).map((item, idx) => (
                       <tr key={idx}>
                         <td className="px-4 py-3 text-on-surface">{item.product_name || `Product #${item.product_id}`}</td>
-                        <td className="px-4 py-3 text-right text-on-surface-variant">${Number(item.price || 0).toFixed(2)}</td>
+                        <td className="px-4 py-3 text-right text-on-surface-variant">{formatCurrency(item.price)}</td>
                         <td className="px-4 py-3 text-center">{item.quantity}</td>
-                        <td className="px-4 py-3 text-right font-medium">${Number((item.price || 0) * item.quantity).toFixed(2)}</td>
+                        <td className="px-4 py-3 text-right font-medium">{formatCurrency((item.price || 0) * item.quantity)}</td>
                       </tr>
                     ))}
                   </tbody>
                   <tfoot className="bg-slate-50 border-t border-[#E2E8F0]">
                     <tr>
                       <td colSpan="3" className="px-4 py-3 text-right font-medium text-on-surface-variant">Total:</td>
-                      <td className="px-4 py-3 text-right font-semibold text-primary">${Number(detailData.total_amount || 0).toFixed(2)}</td>
+                      <td className="px-4 py-3 text-right font-semibold text-primary">{formatCurrency(detailData.total_amount)}</td>
                     </tr>
                   </tfoot>
                 </table>

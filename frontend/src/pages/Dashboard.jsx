@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { getProducts } from '../services/productService';
 import { getCustomers } from '../services/customerService';
 import { getOrders } from '../services/orderService';
+import { formatCurrency } from '../utils/format';
 
 const LOW_STOCK_THRESHOLD = 10;
 
@@ -168,7 +169,7 @@ export default function Dashboard() {
                         <tr key={o.id} className="hover:bg-slate-50 transition-colors">
                           <td className="py-4 px-6 text-on-surface font-medium">ORD-{String(o.id).padStart(5, '0')}</td>
                           <td className="py-4 px-6 text-on-surface-variant">{o.customer_name || 'N/A'}</td>
-                          <td className="py-4 px-6 text-on-surface font-semibold">${Number(o.total_amount || 0).toFixed(2)}</td>
+                          <td className="py-4 px-6 text-on-surface font-semibold">{formatCurrency(o.total_amount)}</td>
                           <td className="py-4 px-6 text-right">
                             <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-label-md ${status.cls}`}>{status.label}</span>
                           </td>

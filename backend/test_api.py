@@ -16,10 +16,10 @@ failed = 0
 def test(name, condition, detail=""):
     global passed, failed
     if condition:
-        print(f"  ✅ {name}")
+        print(f"  [PASS] {name}")
         passed += 1
     else:
-        print(f"  ❌ {name} — {detail}")
+        print(f"  [FAIL] {name} -- {detail}")
         failed += 1
 
 
@@ -33,14 +33,14 @@ def main():
     # --------------------------------------------------
     # 1. Health Check
     # --------------------------------------------------
-    print("\n🔹 Health Check")
+    print("\n>> Health Check")
     r = requests.get(f"{BASE}/")
     test("GET / returns healthy", r.status_code == 200 and r.json().get("status") == "healthy", f"status={r.status_code}")
 
     # --------------------------------------------------
     # 2. Product CRUD
     # --------------------------------------------------
-    print("\n🔹 Product Management")
+    print("\n>> Product Management")
 
     # Create product
     p1 = requests.post(f"{BASE}/products", json={"name": "Wireless Mouse", "sku": "WM-001", "price": 25.99, "quantity_in_stock": 50})
@@ -84,7 +84,7 @@ def main():
     # --------------------------------------------------
     # 3. Customer CRUD
     # --------------------------------------------------
-    print("\n🔹 Customer Management")
+    print("\n>> Customer Management")
 
     c1 = requests.post(f"{BASE}/customers", json={"name": "John Doe", "email": "john@example.com", "phone": "+1-555-0101"})
     test("POST /customers — create customer", c1.status_code == 201)
@@ -110,7 +110,7 @@ def main():
     # --------------------------------------------------
     # 4. Order Management + Business Logic
     # --------------------------------------------------
-    print("\n🔹 Order Management & Business Logic")
+    print("\n>> Order Management & Business Logic")
 
     if product1_id and product2_id and customer1_id:
         # Check stock before order
@@ -195,7 +195,7 @@ def main():
     # --------------------------------------------------
     # 5. Delete CRUD
     # --------------------------------------------------
-    print("\n🔹 Delete Operations")
+    print("\n>> Delete Operations")
 
     if product1_id:
         d = requests.delete(f"{BASE}/products/{product1_id}")

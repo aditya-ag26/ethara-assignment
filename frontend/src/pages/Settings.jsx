@@ -16,7 +16,7 @@ export default function Settings() {
   const { addToast } = useToast();
   const [activeTab, setActiveTab] = useState('profile');
   const [profile, setProfile] = useState({ name: 'Admin User', email: 'admin@ims.example.com', role: 'System Administrator' });
-  const [company, setCompany] = useState({ name: 'Acme Logistics Corp.', address: '123 Industrial Parkway\nSuite 400\nMetropolis, NY 10001', currency: 'USD', taxId: 'US-123456789' });
+  const [company, setCompany] = useState({ name: 'Ethara Solutions Pvt. Ltd.', address: '42, Andheri East\nMumbai, Maharashtra 400069\nIndia', currency: 'INR', taxId: '27AABCE1234F1ZH' });
 
   const handleSaveProfile = () => addToast('Profile updated successfully');
   const handleSaveCompany = () => addToast('Company info updated successfully');
@@ -119,13 +119,14 @@ export default function Settings() {
                   <div className="space-y-2">
                     <label className="block text-label-md text-on-surface">Default Currency</label>
                     <select className="w-full h-10 px-3 py-2 bg-surface border border-outline-variant rounded text-body-md text-on-surface focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-shadow" value={company.currency} onChange={(e) => setCompany({ ...company, currency: e.target.value })}>
+                      <option value="INR">INR - Indian Rupee</option>
                       <option value="USD">USD - US Dollar</option>
                       <option value="EUR">EUR - Euro</option>
                       <option value="GBP">GBP - British Pound</option>
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <label className="block text-label-md text-on-surface">Tax ID / VAT Number</label>
+                    <label className="block text-label-md text-on-surface">GSTIN / Tax ID</label>
                     <input className="w-full h-10 px-3 py-2 bg-surface border border-outline-variant rounded text-body-md text-on-surface focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-shadow" value={company.taxId} onChange={(e) => setCompany({ ...company, taxId: e.target.value })} />
                   </div>
                 </div>
