@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+// In dev mode, Vite proxy handles /products, /customers, /orders -> localhost:8000
+// In production (Docker/nginx), nginx proxy handles the same
+// Only use VITE_API_URL if explicitly set for standalone deployment
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 const api = axios.create({
   baseURL: API_URL,
